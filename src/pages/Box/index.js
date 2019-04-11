@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import api from '../../services/api';
+import { distanceInWords } from 'date-fns';
+import en from 'date-fns/locale/en';
 
 import { MdInsertDriveFile } from 'react-icons/md';
 import logo from '../../assets/logo.svg';
@@ -32,17 +34,8 @@ export default class Box extends Component {
                 <MdInsertDriveFile size={24} color="#A5CFFF" />
                 <strong>{ file.title }</strong>
               </a>
-              <span>{ file.createdAt }</span>
+              <span>{ distanceInWords(file.createdAt, new Date(), { locale: en } )} {" "}ago</span>
             </li>
-            /*
-            <li>
-              <a className="fileInfo" href="">
-                <MdInsertDriveFile size={24} color="#A5CFFF" />
-                <strong>DigiCult Psy-Fi Compilation 2019</strong>
-              </a>
-              <span>30 minutes ago</span>
-            </li>
-            */
           )) }
           
         </ul>

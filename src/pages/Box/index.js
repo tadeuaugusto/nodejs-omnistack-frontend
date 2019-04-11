@@ -38,7 +38,7 @@ export default class Box extends Component {
     io.emit('connectRoom', boxId);
 
     io.on('file', data => {
-      this.setState({ box: { ...this.state.box, files: [ ...this.state.box.files ] } });
+      this.setState({ box: { ... this.state.box, files: [ data, ... this.state.box.files ] } });
     });
   }
 

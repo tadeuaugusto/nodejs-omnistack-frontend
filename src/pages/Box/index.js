@@ -32,8 +32,8 @@ export default class Box extends Component {
 
     const boxId = this.props.match.params.id;
 
-    // const io = socket('https://hrk.omnistack-backend.herokuapp.com');
-    const io = socket(process.env.URL || 'http://localhost:3232');
+    const io = socket('https://hrk.omnistack-backend.herokuapp.com');
+    // const io = socket(process.env.URL || 'http://localhost:3232');
     
     io.emit('connectRoom', boxId);
 

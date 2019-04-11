@@ -8,6 +8,7 @@ import logo from '../../assets/logo.svg';
 import './styles.css';
 
 import Dropzone from 'react-dropzone';
+import socket from 'socket.io-client';
 
 export default class Box extends Component {
 
@@ -16,10 +17,29 @@ export default class Box extends Component {
   }
 
   async componentDidMount() {
+
+    // subscribes using socket.io
+    this.subscribeToNewFiles();
+
+
     const boxId = this.props.match.params.id;
     const response = await api.get(`boxes/${boxId}`);
 
     this.setState({ box: response.data });
+  }
+
+  subscribeToNewFiles = () => {
+
+    const boxId = this.props.match.params.id;
+
+    // const io = socket('https://hrk.omnistack-backend.herokuapp.com');
+    const io = socket(process.env.URL || 'http://localhost:3232');
+    
+    io.emit('connectRoom', boxId);
+
+    io.on('file', data => {
+      this.setState({ box: { ...this.state.box, files: [ ...this.state.box.files ] } });
+    });
   }
 
   handleUpload = files => {
@@ -29,7 +49,7 @@ export default class Box extends Component {
       const boxId = this.props.match.params.id;
 
       data.append('file', file);
-      api.post(`boxes/${box}/files`, data);
+      api.post(`boxes/${boxId}/files`, data);
     });
   };
 

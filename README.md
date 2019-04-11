@@ -7,6 +7,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 - react-icons
 - date-fns
 - react-dropzone
+- socket.io-client
 
 ## Available Scripts
 

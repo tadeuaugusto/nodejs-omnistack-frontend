@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 // import logo from '*.png';
 // import logo from 'src/pages/assets/logo';
-import logo from '../assets/logo.svg';
+import logo from '../../assets/logo.svg';
 import './styles.css';
 
 export default class Main extends Component {

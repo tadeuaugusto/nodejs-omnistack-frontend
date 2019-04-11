@@ -22,23 +22,24 @@ export default class Box extends Component {
     this.subscribeToNewFiles();
 
 
-    const boxId = this.props.match.params.id;
-    const response = await api.get(`boxes/${boxId}`);
+    const box = this.props.match.params.id;
+    const response = await api.get(`boxes/${box}`);
 
     this.setState({ box: response.data });
   }
 
   subscribeToNewFiles = () => {
 
-    const boxId = this.props.match.params.id;
+    const box = this.props.match.params.id;
 
     const io = socket('https://hrk.omnistack-backend.herokuapp.com');
     // const io = socket(process.env.URL || 'http://localhost:3232');
     
-    io.emit('connectRoom', boxId);
+    io.emit('connectRoom', box);
 
     io.on('file', data => {
-      this.setState({ box: { ... this.state.box, files: [ data, ... this.state.box.files ] } });
+      console.log(data);
+      this.setState({ box: { ... this.state.box, files: [ data, ... this.state.box.files ] } })
     });
   }
 
@@ -46,10 +47,10 @@ export default class Box extends Component {
     files.forEach(file => {
 
       const data = new FormData();
-      const boxId = this.props.match.params.id;
+      const box = this.props.match.params.id;
 
       data.append('file', file);
-      api.post(`boxes/${boxId}/files`, data);
+      api.post(`boxes/${box}/files`, data);
     });
   };
 
